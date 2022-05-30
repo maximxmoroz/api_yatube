@@ -22,8 +22,7 @@ class GroupViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class CommentViewSet(viewsets.ModelViewSet):
-    permission_classes = (
-       permissions.IsAuthenticated, AuthorOrReading)
+    permission_classes = (permissions.IsAuthenticated, AuthorOrReading)
     serializer_class = CommentSerializer
 
     def perform_create(self, serializer):
