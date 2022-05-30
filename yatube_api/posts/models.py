@@ -34,13 +34,38 @@ class Post(models.Model):
 
 
 class Comment(models.Model):
-    author = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='comments'
-    )
     post = models.ForeignKey(
-        Post, on_delete=models.CASCADE, related_name='comments'
+        Post,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        related_name='comments',
+        verbose_name='Пост',
+        help_text='Оставьте коментарий к посту'
     )
-    text = models.TextField()
+    author = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+        related_name='comments',
+        verbose_name='Автор коментария'
+    )
+    text = models.TextField(
+        null=True,
+        max_length=400,
+        verbose_name='Коментарий',
+        help_text='Коментарий к посту'
+    )
     created = models.DateTimeField(
-        'Дата добавления', auto_now_add=True, db_index=True
+        auto_now_add=True,
+        db_index=True,
+        verbose_name='Дата создания коментария'
     )
+
+    class Meta:
+        verbose_name = 'Коментарий'
+        verbose_name_plural = 'Коментарии'
+
+    def __str__(self):
+        return self.text[:15]
